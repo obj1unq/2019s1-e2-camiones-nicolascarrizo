@@ -1,0 +1,88 @@
+import camion.*
+import cosas.*
+
+test "El peso total del camion" {
+    camion.cargar(knightRider)
+    camion.cargar(bumblebee)
+	assert.equals(2300, camion.pesoTotal())
+
+}
+
+test "Objetos peligrosos que superan el nivel dado"{
+	camion.cargar(knightRider)
+    camion.cargar(paqueteDeLadrillos)
+	camion.cargar(bateriaAntiaera)
+	bateriaAntiaera.cargarMisiles()
+	
+	assert.equals([bateriaAntiaera], camion.objetosPeligrosos(50))
+}
+
+test "Objetos mas peligrosos que superan a la cosa dada"{
+	
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(residuosRadioactivos)
+	camion.cargar(arenaAGranel)
+	camion.cargar(bateriaAntiaera)
+	bateriaAntiaera.cargarMisiles()
+	
+	assert.equals([residuosRadioactivos, bateriaAntiaera], camion.objetosMasPeligrososQue(knightRider))
+}
+
+test "El camion puede circular en ruta"{
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(residuosRadioactivos)
+	camion.cargar(arenaAGranel)
+	camion.cargar(bateriaAntiaera)
+	bateriaAntiaera.cargarMisiles()
+	
+	assert.that(camion.puedeCircularEnRuta(1000))
+}
+
+test "El camion tiene algo que pesa entre min y max"{
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(residuosRadioactivos)
+	camion.cargar(arenaAGranel)
+	camion.cargar(bateriaAntiaera)
+	
+	assert.that(camion.tieneAlgoQuePesaEntre(1,10))
+}
+
+test "La cosa mas pesada que tiene el camion"{
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(arenaAGranel)
+	arenaAGranel.peso(10)
+	camion.cargar(bateriaAntiaera)
+	bateriaAntiaera.cargarMisiles()
+	
+	assert.equals(bateriaAntiaera, camion.cosaMasPesada())
+	
+}
+
+test "Total de bultos que tienen las cosas del camion"{
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(residuosRadioactivos)
+	camion.cargar(arenaAGranel)
+	camion.cargar(bateriaAntiaera)
+	bateriaAntiaera.cargarMisiles()
+	camion.cargar(contenedorPortuario)
+	contenedorPortuario.agregarAlContenedor(knightRider)
+	contenedorPortuario.agregarAlContenedor(bumblebee)
+	
+	assert.equals(9, camion.totalBultos())
+}
+
+test "Pesos de las cosas que tiene el camion"{
+	
+	camion.cargar(paqueteDeLadrillos)
+	paqueteDeLadrillos.cantDeLadrillos(5)
+	camion.cargar(residuosRadioactivos)
+	residuosRadioactivos.peso(4)
+	camion.cargar(arenaAGranel)
+	arenaAGranel.peso(7)
+	
+	assert.equals([14,4,7], camion.pesos())
+}
+
+
+
+   

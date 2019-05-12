@@ -2,45 +2,61 @@ import cosas.*
 
 object camion {
 	const property cosas = []
-	var peso = 0
-	var tara = 1000
+	var peso = 1000
+
 	method peso(){ return peso }
 	
 	method cargar(unaCosa) { cosas.add(unaCosa) }
 	
+	method hacerCambios(){
+		
+		cosas.forEach({cosa => cosa.producirCambios()})
+	}
+	
 	method descargar(unaCosa){ cosas.remove(unaCosa) }
+	 
+	method pesoTotal(){ return self.peso() + cosas.sum{cosa => cosa.peso()}}
 	
-	method pesoTotal(){ }
-	
-	method excedidoDePeso(){ return self.peso() > 2.5 }
+	method excedidoDePeso(){ return self.peso() > 2500 }
 	
 	method objetosPeligrosos(nivel){ 
 		
-		cosas.filter({cosa => cosa.superanPeligrosidad(nivel)})
+		return cosas.filter({cosa => cosa.nivelDePeligrosidad() > nivel})
+		
+		// filter devuelve una lista con todos los que cumplen la condicion
 	}
 	
 	method objetosMasPeligrososQue(cosa){
-		cosas.filter({carga => carga.esMasPeligrosoQue(cosa)})
+		return cosas.filter({carga => carga.nivelDePeligrosidad() > cosa.nivelDePeligrosidad()})
 	}
+	
 	
 	method puedeCircularEnRuta(nivelMaximoDePeligrosidad){
 		
-		cosas.all({cosa => cosa.superanPeligrosidad(nivelMaximoDePeligrosidad)})
+		return cosas.all({cosa => cosa.nivelDePeligrosidad() < nivelMaximoDePeligrosidad})
+		
+		//devuelve verdadero si todos cumplen con la condicion, si alguno
+		//no la cumple devuelve falso. 
 	}
 	
 	method tieneAlgoQuePesaEntre(min, max){
-		cosas.find({cosa => cosa.pesaEntre(min, max) })
+	return	cosas.any({cosa =>  cosa.peso().between(min,max)})
+	
+	 //devuelve verdadero , si alguno cumple la condicion 
 	}
 	
 	method cosaMasPesada(){
 		
-		cosas.find({cosa => cosa.tienePesoMayor()})
+		return cosas.max({cosa => cosa.peso()})
 	}
 	
-	method peso(){
+	method totalBultos(){
 		
-		cosas.map({cosa => cosa.peso()})
+		return cosas.sum({cosa => cosa.bultos()})
 	}
 	
-	//totalBultos es un bulto cada uno 
+	method pesos(){
+		
+		return cosas.map({cosa => cosa.peso()})
+	}
 }

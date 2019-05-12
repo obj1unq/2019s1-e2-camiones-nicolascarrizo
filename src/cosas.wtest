@@ -1,0 +1,60 @@
+import cosas.*
+import camion.*
+
+describe "cosas que tiene el camion" {
+
+	fixture {
+		camion.cargar(bumblebee)
+		camion.cargar(paqueteDeLadrillos)
+		camion.cargar(bateriaAntiaera)
+	    camion.cargar(contenedorPortuario)
+	    camion.cargar(residuosRadioactivos)
+		
+		}
+		
+test "producir cambios al agregar una nueva cosa"{
+	camion.cargar(arenaAGranel)
+	contenedorPortuario.agregarAlContenedor(residuosRadioactivos)
+	camion.hacerCambios()
+	
+	
+	assert.equals(30, bumblebee.nivelDePeligrosidad())
+	assert.equals(14, paqueteDeLadrillos.cantDeLadrillos())
+	assert.that(bateriaAntiaera.tieneMisiles())
+	assert.equals(30, residuosRadioactivos.peso())
+	
+	
+  }
+		
+test "El peso del paquete de ladrillos" {
+
+	paqueteDeLadrillos.cantDeLadrillos(8)
+	
+	assert.equals(20, paqueteDeLadrillos.peso())
+
+}
+
+test "Tiene misiles"{
+	bateriaAntiaera.cargarMisiles()
+	assert.that(bateriaAntiaera.tieneMisiles())
+}
+
+test "Nivel de peligrosidad del contenedor portuario"{
+	contenedorPortuario.agregarAlContenedor(knightRider)
+	contenedorPortuario.agregarAlContenedor(bumblebee)
+	contenedorPortuario.agregarAlContenedor(bateriaAntiaera)
+	bateriaAntiaera.cargarMisiles()
+	
+	assert.equals(100, contenedorPortuario.nivelDePeligrosidad())
+}
+
+test "El peso del embalaje de seguridad"{
+	embalajeDeSeguridad.cosaQueTengo(residuosRadioactivos)
+	residuosRadioactivos.peso(40)
+	
+	assert.equals(40, embalajeDeSeguridad.peso())	
+}
+
+
+}
+
