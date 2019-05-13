@@ -12,8 +12,10 @@ object bumblebee {
 	method nivelDePeligrosidad() { return if (transformadoEnAuto) { 15 } else { 30 }  }
 	method transformar() { transformadoEnAuto = not transformadoEnAuto }
 	method bultos(){ return 2}
-	method producirCambios(){ self.transformar()}
+	method producirCambios(){ self.transformar()} //podria ser false directamente. 
 }
+
+//class paqueteDeLadrillos
 
 object paqueteDeLadrillos{
 	var cantDeLadrillos = 2

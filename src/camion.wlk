@@ -6,7 +6,10 @@ object camion {
 
 	method peso(){ return peso }
 	
-	method cargar(unaCosa) { cosas.add(unaCosa) }
+	method cargar(unaCosa) { 
+		cosas.add(unaCosa)
+		// cosa.hacerCambios()
+	}
 	
 	method hacerCambios(){
 		
